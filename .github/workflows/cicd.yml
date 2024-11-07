@@ -1,0 +1,18 @@
+name: cicd
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: check docker compose version
+      run: docker compose version
+    # steps:
+    # - name: clone repo to build container
+    #   uses: actions/checkout@v1
+      
