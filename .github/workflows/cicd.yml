@@ -22,7 +22,7 @@ jobs:
         export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
 
     - name: build
-      run: docker compose up -d
+      run: docker compose build
 
     - name: list docker images
       run: docker images
