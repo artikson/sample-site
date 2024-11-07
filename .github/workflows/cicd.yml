@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,4 +16,13 @@ jobs:
     - name: env test
       run: |
         export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-        echo $POSTGRES_USER
+        export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+        export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+        export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+        export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+
+    - name: build
+      run: docker compose up -d
+
+    - name: list docker images
+      run: docker images
