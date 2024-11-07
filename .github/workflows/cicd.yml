@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: check docker compose version
-      run: docker compose version
-    # steps:
-    # - name: clone repo to build container
-    #   uses: actions/checkout@v1
+    - name: clone repo to build container
+      uses: actions/checkout@v1
+
+    - name: build
+      run: docker compose up build
       
