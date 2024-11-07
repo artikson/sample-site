@@ -13,11 +13,7 @@ jobs:
     - name: clone repo to build container
       uses: actions/checkout@v1
 
-    - name: executing remote ssh commands to set env
-      uses: artikson/sample-site@main
-      with:
-        script: |
-          export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-
-    - name: print secret
-      run: echo $POSTGRES_USER
+    - name: env test
+      run: |
+        export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+        echo $POSTGRES_USER
