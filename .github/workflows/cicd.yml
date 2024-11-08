@@ -49,7 +49,7 @@ jobs:
         echo "{{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
 
     - name: ssh to deploy server
-      run: ssh -i ~/.ssh/ed25519 ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }}
+      run: ssh -i ~/.ssh/id_ed25519 ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }}
 
     - name: clone repo to deploy server
       uses: actions/checkout@v1
