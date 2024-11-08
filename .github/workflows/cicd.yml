@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: list dir
-      run: ls ~/.ssh/
     - name: clone repo to build container
       uses: actions/checkout@v1
 
@@ -40,8 +38,10 @@ jobs:
     needs: cicdel-steps
 
     steps:
-    - name: add ssh key
-      run: echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys
+    - name: craating ssh dir and add ssh key
+      run: |
+        mkdir ~/.ssh/ &&  
+        echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys
 
     - name: ssh to deploy server
       run: ssh ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }}
