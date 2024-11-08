@@ -61,8 +61,8 @@ jobs:
     - name: ls la
       run: ls -la
 
-    # - name: copy .env to server
-    #   run: scp .env -P ${{ secrets.DP_SERVER_PORT }} ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:/home/tyoma/git/sample-site/
+    - name: copy .env to server
+      run: scp .env -P ${{ secrets.DP_SERVER_PORT }} ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:/home/tyoma/git/sample-site/
 
       
     - name: deploy
