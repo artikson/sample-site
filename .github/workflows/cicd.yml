@@ -44,6 +44,7 @@ jobs:
     steps:
     - name: ssh configuring
       run: |
+        mkdir ~/.ssh/ &&
         echo "{{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa &&
         less ~/.ssh/id_rsa
       
