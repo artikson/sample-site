@@ -67,5 +67,5 @@ jobs:
       
     - name: deploy
       run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site && ls -la"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site && docker compose up"
 
