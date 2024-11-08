@@ -39,7 +39,7 @@ jobs:
 
   cdep-steps:
     runs-on: ubuntu-latest
-    # needs: cicdel-steps
+    needs: cicdel-steps
 
     steps:
     - name: ssh configuring
