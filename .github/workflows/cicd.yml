@@ -44,7 +44,7 @@ jobs:
       run: echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys
 
     - name: ssh to deploy server
-      run: ssh ${{ secrets.DP_SERVER_USER }}@${{ DP_SERVER_IP }} -p ${{ DP_SERVER_SSH_PORT }}
+      run: ssh ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ DP_SERVER_SSH_PORT }}
 
     - name: clone repo to deploy server
       uses: actions/checkout@v1
