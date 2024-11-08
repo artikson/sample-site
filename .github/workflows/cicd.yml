@@ -46,7 +46,7 @@ jobs:
       run: |
         mkdir ~/.ssh/ &&
         echo "{{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa &&
-        less ~/.ssh/id_rsa
+        ssh-keyscan -p ${{ secrets.SSH_HOST_PORT }} ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
       
         # install -m 600 -D /dev/null ~/.ssh/id_rsa &&
     
