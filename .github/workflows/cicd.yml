@@ -45,8 +45,8 @@ jobs:
     - name: ssh configuring
       run: |
         mkdir ~/.ssh/ &&
-        chmod 0700 ~/.ssh/id_rsa &&
-        echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+        echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa &&
+        chmod 0700 ~/.ssh/id_rsa
       
     - name: ssh to deploy server
       run: ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "ls -la"
