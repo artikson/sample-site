@@ -46,13 +46,9 @@ jobs:
       run: |
         install -m 600 -D /dev/null ~/.ssh/id_ed25519 &&
         echo "{{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519 &&
-        ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
+        less ~/.ssh/id_ed25519 &&
+        ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts &&
 
-    - name: ssh to deploy server
-      run: ssh -i ~/.ssh/id_ed25519 ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "ls -la"
+    # - name: ssh to deploy server
+    #   run: ssh -i ~/.ssh/id_ed25519 ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "ls -la"
 
-    - name: clone repo to deploy server
-      uses: actions/checkout@v1
-
-    - name: compose up
-      run: compose up -d
