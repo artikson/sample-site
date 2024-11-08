@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  ci:
+  cicdel-steps:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +26,28 @@ jobs:
 
     - name: list docker images
       run: docker images
+
+    - name: login to ghcr.io
+      run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
+
+    - name: delivery flask
+      run: docker push ghcr.io/${{ github.actor }}/sample-site-flask:latest
+    
+    - name: delivery nginx
+      run: docker push ghcr.io/${{ github.actor }}/sample-site-nginx:latest
+
+  cdep-steps:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: add ssh key
+      run: echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys
+
+    - name: ssh to deploy server
+      run: ssh ${{ secrets.DP_SERVER_USER }}@${{ DP_SERVER_IP }} -p ${{ DP_SERVER_SSH_PORT }}
+
+    - name: clone repo to deploy server
+      uses: actions/checkout@v1
+
+    - name: compose up
+      run: compose up -d
