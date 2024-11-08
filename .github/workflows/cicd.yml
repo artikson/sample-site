@@ -44,6 +44,8 @@ jobs:
     steps:
     - name: ssh configuring
       run: |
+        mkdir ~/.ssh/ &&
+        chmod 0700 ~/.ssh/id_rsa &&
         echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
       
     - name: ssh to deploy server
