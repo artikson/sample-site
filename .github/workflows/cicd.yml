@@ -50,12 +50,16 @@ jobs:
 
     - name: env defining
       run: |
-        export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-        export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-        export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-        export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-        export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+
       
     - name: deploy
-      run: ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site || docker compose pull && docker compose up -d"
+      run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} 
+          "cd /home/tyoma/git/sample-site || 
+           export POSTGRES_USER=${{ secrets.POSTGRES_USER }} &&
+           export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} &&
+           export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} &&
+           export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} &&
+           export POSTGRES_DB=${{ secrets.POSTGRES_DB }} &&
+           docker compose pull && docker compose up -d"
 
