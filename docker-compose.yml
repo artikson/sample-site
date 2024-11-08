@@ -31,6 +31,7 @@ services:
         condition: service_healthy
     expose:
       - 8080
+    image: ghcr.io/artikson/sample-site-flask
 
   nginx:
     build:
@@ -41,3 +42,4 @@ services:
       - flask
     ports:
       - "8080:80"
+    image: ghcr.io/artikson/sample-site-nginx
