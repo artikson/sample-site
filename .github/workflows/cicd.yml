@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: list dir
+      run: ls ~/.ssh/
     - name: clone repo to build container
       uses: actions/checkout@v1
 
