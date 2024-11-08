@@ -38,14 +38,13 @@ jobs:
     needs: cicdel-steps
 
     steps:
-    - name: creating ssh dir, add ssh key and restard ssh service
+    - name: ssh configuring
       run: |
         mkdir ~/.ssh/ &&  
         echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys &&
-        sudo service ssh restart
 
     - name: ssh to deploy server
-      run: ssh ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }}
+      run: ssh -i ~/.ssh/ed25519 ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }}
 
     - name: clone repo to deploy server
       uses: actions/checkout@v1
