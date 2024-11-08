@@ -17,13 +17,13 @@ jobs:
   #   - name: clone repo to build container
   #     uses: actions/checkout@v1
 
-  #   # - name: env test
-  #   #   run: |
-  #   #     export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-  #   #     export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-  #   #     export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-  #   #     export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-  #   #     export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+    # - name: env test
+    #   run: |
+        # export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+        # export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+        # export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+        # export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+        # export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
 
   #   - name: build
   #     run: docker compose build
@@ -50,9 +50,19 @@ jobs:
 
     - name: env defining
       run: |
+          cat <<EOT >> .env
+          export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+          export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+          export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          EOT
+
+    - name: copy .env to server
+      run: scp .env ${{ secrets.DP_SERVER_USER }}@${{ DP_SERVER_IP }}:/home/tyoma/git/sample-site/
 
       
     - name: deploy
       run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site && export POSTGRES_USER=${{ secrets.POSTGRES_USER }} && export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} && export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} && export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} && export POSTGRES_DB=${{ secrets.POSTGRES_DB }} && docker compose pull && docker compose up"
+          ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site && ls -la"
 
