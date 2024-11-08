@@ -30,11 +30,8 @@ jobs:
     - name: login to ghcr.io
       run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
 
-    - name: delivery flask
-      run: docker push ghcr.io/${{ github.actor }}/sample-site-flask:latest
-    
-    - name: delivery nginx
-      run: docker push ghcr.io/${{ github.actor }}/sample-site-nginx:latest
+    - name: delivery
+      run: docker compose push
 
   cdep-steps:
     runs-on: ubuntu-latest
