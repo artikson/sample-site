@@ -38,10 +38,11 @@ jobs:
     needs: cicdel-steps
 
     steps:
-    - name: craating ssh dir and add ssh key
+    - name: creating ssh dir, add ssh key and restard ssh service
       run: |
         mkdir ~/.ssh/ &&  
-        echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys
+        echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys &&
+        sudo service ssh restart
 
     - name: ssh to deploy server
       run: ssh ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }}
