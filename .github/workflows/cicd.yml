@@ -64,6 +64,12 @@ jobs:
     - name: copy .env to server
       run: scp -P ${{ secrets.DP_SERVER_SSH_PORT }} .env ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:/home/tyoma/git/sample-site/
 
+    - name: clone repo to container
+      uses: actions/checkout@v1
+
+    - name: copy .env to server
+      run: scp -P ${{ secrets.DP_SERVER_SSH_PORT }} docker-compose.yml ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:/home/tyoma/git/sample-site/
+
       
     - name: deploy
       run: |
