@@ -41,7 +41,7 @@ jobs:
     - name: ssh configuring
       run: |
         mkdir ~/.ssh/ &&  
-        echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys &&
+        echo "{{ secrets.SSH_KEY_PUB }}" > ~/.ssh/authorized_keys
 
     - name: ssh to deploy server
       run: ssh -i ~/.ssh/ed25519 ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }}
