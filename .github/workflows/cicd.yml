@@ -59,7 +59,7 @@ jobs:
           EOT
 
     - name: copy .env to server
-      run: scp .env ${{ secrets.DP_SERVER_USER }}@${{ DP_SERVER_IP }}:/home/tyoma/git/sample-site/
+      run: scp .env ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:/home/tyoma/git/sample-site/
 
       
     - name: deploy
