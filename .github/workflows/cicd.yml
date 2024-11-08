@@ -46,7 +46,7 @@ jobs:
       run: |
         mkdir ~/.ssh/ &&
         echo "{{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa &&
-        chmod 0700 ~/.ssh/ &&
+        chmod 0700 ~/.ssh/id_rsa &&
         ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
       
 
