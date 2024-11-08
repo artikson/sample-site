@@ -52,6 +52,6 @@ jobs:
     
         # ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts &&
 
-    # - name: ssh to deploy server
-    #   run: ssh -i ~/.ssh/id_ed25519 ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "ls -la"
+    - name: ssh to deploy server
+      run: ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "ls -la"
 
