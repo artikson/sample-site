@@ -4,38 +4,38 @@ on:
   workflow_dispatch
     
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  # cicdel-steps:
-  #   runs-on: ubuntu-latest
+  cicdel-steps:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - name: clone repo to build container
-  #     uses: actions/checkout@v1
+    steps:
+    - name: clone repo to build container
+      uses: actions/checkout@v1
 
-  #   - name: env test
-  #     run: |
-  #       export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-  #       export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-  #       export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-  #       export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-  #       export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+    # - name: env test
+    #   run: |
+    #     export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+    #     export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+    #     export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+    #     export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+    #     export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
 
-  #   - name: build
-  #     run: docker compose build
+    - name: build
+      run: docker compose build
 
-  #   - name: list docker images
-  #     run: docker images
+    - name: list docker images
+      run: docker images
 
-  #   - name: login to ghcr.io
-  #     run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
+    - name: login to ghcr.io
+      run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
 
-  #   - name: delivery
-  #     run: docker compose push
+    - name: delivery
+      run: docker compose push
 
   cdep-steps:
     runs-on: ubuntu-latest
@@ -47,7 +47,15 @@ jobs:
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
+
+      - name: env defining
+      run: |
+        export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+        export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+        export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+        export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+        export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
       
     - name: deploy
-      run: ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site || docker compose pull && docker compose up"
+      run: ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site || docker compose pull && docker compose up -d"
 
