@@ -44,9 +44,9 @@ jobs:
     steps:
     - name: ssh configuring
       run: |
-        mkdir ~/.ssh/ &&
-        echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa &&
-        chmod 0700 ~/.ssh/id_rsa
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
       
     - name: ssh to deploy server
       run: ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "ls -la"
