@@ -66,4 +66,4 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email n410tsacc@gmail -d 4rt1ks0n.ru --agree-tos
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email n410tsacc@gmail.com -d 4rt1ks0n.ru --agree-tos
