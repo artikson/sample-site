@@ -16,7 +16,7 @@ services:
       - "55432:5432"
     deploy:
       restart_policy:
-      condition: any
+        condition: any
   
   flask:
     build:
@@ -39,7 +39,7 @@ services:
     image: ghcr.io/artikson/sample-site-flask
     deploy:
       restart_policy:
-      condition: any
+        condition: any
 
   nginx:
     build:
@@ -53,4 +53,4 @@ services:
     image: ghcr.io/artikson/sample-site-nginx
     deploy:
       restart_policy:
-      condition: any
+        condition: any
