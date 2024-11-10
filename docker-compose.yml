@@ -50,14 +50,18 @@ services:
       - flask
     ports:
       - "8080:80"
+<<<<<<< HEAD
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
+=======
+>>>>>>> ca3a8e12dba7995ebb7b21fbeaf027b055444135
     image: ghcr.io/artikson/sample-site-nginx
     deploy:
       restart_policy:
         condition: any
+<<<<<<< HEAD
 
     certbot:
       image: certbot/certbot
@@ -66,3 +70,5 @@ services:
         - ./certbot/conf:/etc/letsencrypt
         - ./certbot/www:/var/www/certbot
       command: certonly --webroot -w /var/www/certbot --force-renewal --email n410tsacc@gmail.com -d 4rt1ks0n.ru --agree-tos
+=======
+>>>>>>> ca3a8e12dba7995ebb7b21fbeaf027b055444135
