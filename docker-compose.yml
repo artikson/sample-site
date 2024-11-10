@@ -1,5 +1,7 @@
 services:
   postgres:
+    restart-policy:
+      condition: any
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     image: postgres
@@ -16,6 +18,8 @@ services:
       - "55432:5432"
   
   flask:
+    restart-policy:
+      condition: any
     build:
       dockerfile: Dockerfile
       context: .
@@ -36,6 +40,8 @@ services:
     image: ghcr.io/artikson/sample-site-flask
 
   nginx:
+    restart-policy:
+      condition: any
     build:
       dockerfile: ./Dockerfile
       context: ./nginx
