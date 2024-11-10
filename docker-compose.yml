@@ -1,7 +1,5 @@
 services:
   postgres:
-    restart-policy:
-      condition: any
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     image: postgres
@@ -16,10 +14,11 @@ services:
       - ~/.pg/pg_data/410simple-project:/var/lib/postgresql/data
     ports:
       - "55432:5432"
+    deploy:
+      restart-policy:
+      condition: any
   
   flask:
-    restart-policy:
-      condition: any
     build:
       dockerfile: Dockerfile
       context: .
@@ -38,10 +37,11 @@ services:
     expose:
       - 8080
     image: ghcr.io/artikson/sample-site-flask
+    deploy:
+      restart-policy:
+      condition: any
 
   nginx:
-    restart-policy:
-      condition: any
     build:
       dockerfile: ./Dockerfile
       context: ./nginx
@@ -51,3 +51,6 @@ services:
     ports:
       - "8080:80"
     image: ghcr.io/artikson/sample-site-nginx
+    deploy:
+      restart-policy:
+      condition: any
