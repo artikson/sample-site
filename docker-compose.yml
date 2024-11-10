@@ -15,7 +15,7 @@ services:
     ports:
       - "55432:5432"
     deploy:
-      restart-policy:
+      restart_policy:
       condition: any
   
   flask:
@@ -38,7 +38,7 @@ services:
       - 8080
     image: ghcr.io/artikson/sample-site-flask
     deploy:
-      restart-policy:
+      restart_policy:
       condition: any
 
   nginx:
@@ -52,5 +52,5 @@ services:
       - "8080:80"
     image: ghcr.io/artikson/sample-site-nginx
     deploy:
-      restart-policy:
+      restart_policy:
       condition: any
