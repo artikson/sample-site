@@ -50,6 +50,7 @@ services:
       - flask
     ports:
       - "8080:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./certbot/conf:/etc/letsencrypt
@@ -58,3 +59,11 @@ services:
     deploy:
       restart_policy:
         condition: any
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email n410tsacc@gmail -d 4rt1ks0n.ru --agree-tos
