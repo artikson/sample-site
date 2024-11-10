@@ -11,7 +11,7 @@ class RegistrationForm(FlaskForm):
     login = StringField('Логин', validators=[DataRequired(), Length(min=5, max=20)])
     password = PasswordField('Пароль', validators=[DataRequired()])
     confirm_password = PasswordField('Подтвердите пароль', validators=[DataRequired(), EqualTo('password')])
-    avatar = FileField('Загрузите свое фото', validators=[FileAllowed(['jpg', 'png', 'jpg'])])
+    avatar = FileField('Загрузите свое фото', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField('Зарегистрироваться')
 
     def validate_login(self, login):
