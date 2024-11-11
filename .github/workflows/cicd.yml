@@ -59,9 +59,6 @@ jobs:
           export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           EOT
 
-    - name: ls la
-      run: ls -la
-
     - name: copy .env to server
       run: scp -P ${{ secrets.DP_SERVER_SSH_PORT }} .env ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:/home/tyoma/git/sample-site/
 
@@ -70,9 +67,11 @@ jobs:
 
     - name: copy .env to server
       run: scp -P ${{ secrets.DP_SERVER_SSH_PORT }} docker-compose.yml ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:/home/tyoma/git/sample-site/
+    
+    - name: login to ghcr.io
+      run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
 
-      
     - name: deploy
       run: |
+          docker compose pull
           ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site && docker compose up -d"
-
