@@ -13,11 +13,6 @@ jobs:
     - name: clone repo to build container
       uses: actions/checkout@v1
 
-    # - name: test nginx configuration
-    #   run: |
-    #     docker compose up &&
-    #     docker exec nginx 
-
     - name: env test
       run: |
         export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
@@ -43,11 +38,11 @@ jobs:
     needs: cicdel-steps
 
     steps:
-    - name: ssh configuring
-      run: |
-        install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
-        ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
+    # - name: ssh configuring
+    #   run: |
+    #     install -m 600 -D /dev/null ~/.ssh/id_rsa
+    #     echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+    #     ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
 
     - name: env defining
       run: |
