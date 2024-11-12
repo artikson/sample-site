@@ -72,6 +72,8 @@ def update(id):
 @post.route('/post/<int:id>/delete', methods=['POST', 'GET'])
 @login_required
 def delete(id):
+    post = Post.query.get(id)
+
     if post.author.id == current_user.id:
         post = Post.query.get(id)
         try:
