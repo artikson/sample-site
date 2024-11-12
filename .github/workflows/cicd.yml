@@ -40,9 +40,10 @@ jobs:
     steps:
     - name: ssh configuring
       run: |
-        # install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
+                
+      # install -m 600 -D /dev/null ~/.ssh/id_rsa
 
     - name: env defining
       run: |
