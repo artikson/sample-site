@@ -72,5 +72,15 @@ jobs:
       run: docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_PAT }}
     
     - name: deploy
-      run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }} -p ${{ secrets.DP_SERVER_SSH_PORT }} "cd /home/tyoma/git/sample-site && docker compose pull && docker compose up -d"
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DP_SERVER_IP }}
+        port: ${{ secrets.DP_SERVER_SSH_PORT }}
+        username: ${{ secrets.DP_SERVER_USER }}
+        key: ${{ secrets.DP_SERVER_SSH_KEY }}
+        script: |
+          docker stop $(docker ps -qa)
+          docker rmi $(docker images -qa)
+          cd /home/tyoma/git/sample-site
+          docker compose pull
+          docker compose up -d
