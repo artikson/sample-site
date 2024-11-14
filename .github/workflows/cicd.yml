@@ -26,18 +26,6 @@ jobs:
     needs: cicdel-steps
     steps:
 
-    - name: clone current repo to ssh host
-      uses: Rxinui/ssh-deploy-repo-action@v1
-      with:
-        # Required
-        ssh-user: ${{ secrets.DP_SERVER_USER }}
-        ssh-password: ${{ secrets.DP_SERVER_SSH_KEY }}
-        ssh-domain: ${{ secrets.DP_SERVER_IP }}
-        # Optional
-        git-clone-by: ssh
-        target-branch: main
-        target-directory: ${{ secrets.PROJECT_DIR }}
-
     - name: deploy
       uses: appleboy/ssh-action@master
       with:
@@ -45,7 +33,7 @@ jobs:
         port: ${{ secrets.DP_SERVER_SSH_PORT }}
         username: ${{ secrets.DP_SERVER_USER }}
         key: ${{ secrets.DP_SERVER_SSH_KEY }}
-        script: |    
+        script: |  
           POSTGRES_USER=${{ secrets.POSTGRES_USER }}
           POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
@@ -54,5 +42,6 @@ jobs:
           docker stop $(docker ps -qa)
           docker rmi $(docker images -qa) -f
           cd ${{ secrets.PROJECT_DIR }}
+          git pull
           docker compose pull
           docker compose up -d
