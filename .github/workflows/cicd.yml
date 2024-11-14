@@ -37,7 +37,7 @@ jobs:
 
     - name: env configuration
       run: |
-          cat <<EOT >> .env
+          cat << EOT > .env
           export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
           export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
           export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
