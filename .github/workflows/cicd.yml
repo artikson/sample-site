@@ -29,25 +29,14 @@ jobs:
     - name: clone repo to container
       uses: actions/checkout@v1
 
-    - name: ssh configuring
-      run: |
-        install -m 600 -D /dev/null ~/.ssh/${{ secrets.SSH_KEY_TYPE }}
-        echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/${{ secrets.SSH_KEY_TYPE }}
-        ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
-
-    # - name: env configuration
+    # - name: ssh configuring
     #   run: |
-    #       cat << EOT > .env
-    #       export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-    #       export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-    #       export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-    #       export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-    #       export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-    #       EOT
-    #       scp -P ${{ secrets.DP_SERVER_SSH_PORT }} .env ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:${{ secrets.PROJECT_DIR }}
-    
-    - name: login to registry
-      run: echo ${{ secrets.PAT }} | docker login ${{ secrets.REGISTRY }} -u ${{ github.actor }} --password-stdin 
+    #     install -m 600 -D /dev/null ~/.ssh/${{ secrets.SSH_KEY_TYPE }}
+    #     echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/${{ secrets.SSH_KEY_TYPE }}
+    #     ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
+
+    # - name: login to registry
+    #   run: echo ${{ secrets.PAT }} | docker login ${{ secrets.REGISTRY }} -u ${{ github.actor }} --password-stdin 
     
     - name: deploy
       uses: appleboy/ssh-action@master
