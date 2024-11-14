@@ -1,12 +1,13 @@
+FROM python:3.11-alpine AS compile-stage
+RUN apk add  --no-cache linux-headers g++
+
+COPY requirements.txt .
+RUN pip install --user -r requirements.txt
+
 FROM python:3.11-alpine
-
-COPY ./requirements.txt /app/requirements.txt
-
+COPY --from=compile-stage /root/.local /root/.local
+COPY . /app
 WORKDIR /app
 
-COPY . /app
-
-RUN apk add --no-cache gcc libc-dev linux-headers && \
-    pip install -r requirements.txt
-
-CMD [ "uwsgi", "app.ini" ]
+ENV PATH=/root/.local/bin:$PATH
+CMD [ "uwsgi", "app.ini"]
