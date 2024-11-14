@@ -24,20 +24,20 @@ jobs:
   cdep-steps:
     runs-on: ubuntu-latest
     needs: cicdel-steps
-
     steps:
-    - name: clone repo to container
-      uses: actions/checkout@v1
 
-    # - name: ssh configuring
-    #   run: |
-    #     install -m 600 -D /dev/null ~/.ssh/${{ secrets.SSH_KEY_TYPE }}
-    #     echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/${{ secrets.SSH_KEY_TYPE }}
-    #     ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
+    - name: clone current repo to ssh host
+      uses: Rxinui/ssh-deploy-repo-action@v1
+      with:
+        # Required
+        ssh-user: ${{ secrets.DP_SERVER_USER }}
+        ssh-password: ${{ secrets.DP_SERVER_SSH_KEY }}
+        ssh-domain: ${{ secrets.DP_SERVER_IP }}
+        # Optional
+        git-clone-by: ssh
+        target-branch: main
+        target-directory: ${{ secrets.PROJECT_DIR }}
 
-    # - name: login to registry
-    #   run: echo ${{ secrets.PAT }} | docker login ${{ secrets.REGISTRY }} -u ${{ github.actor }} --password-stdin 
-    
     - name: deploy
       uses: appleboy/ssh-action@master
       with:
@@ -45,7 +45,7 @@ jobs:
         port: ${{ secrets.DP_SERVER_SSH_PORT }}
         username: ${{ secrets.DP_SERVER_USER }}
         key: ${{ secrets.DP_SERVER_SSH_KEY }}
-        script: |
+        script: |    
           POSTGRES_USER=${{ secrets.POSTGRES_USER }}
           POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
