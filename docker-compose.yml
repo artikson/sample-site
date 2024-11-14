@@ -13,7 +13,7 @@ services:
     volumes:
       - ~/.pg/pg_data/410simple-project:/var/lib/postgresql/data
     ports:
-      - "55432:5432"
+      - "55433:5432"
     deploy:
       restart_policy:
         condition: any
