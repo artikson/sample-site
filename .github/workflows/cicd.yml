@@ -35,16 +35,16 @@ jobs:
         echo "${{ secrets.DP_SERVER_SSH_KEY }}" > ~/.ssh/${{ secrets.SSH_KEY_TYPE }}
         ssh-keyscan -p ${{ secrets.DP_SERVER_SSH_PORT }} ${{ secrets.DP_SERVER_IP }} > ~/.ssh/known_hosts
 
-    - name: env configuration
-      run: |
-          cat << EOT > .env
-          export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-          export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-          export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-          export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-          export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-          EOT
-          scp -P ${{ secrets.DP_SERVER_SSH_PORT }} .env ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:${{ secrets.PROJECT_DIR }}
+    # - name: env configuration
+    #   run: |
+    #       cat << EOT > .env
+    #       export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+    #       export POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+    #       export POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+    #       export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+    #       export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+    #       EOT
+    #       scp -P ${{ secrets.DP_SERVER_SSH_PORT }} .env ${{ secrets.DP_SERVER_USER }}@${{ secrets.DP_SERVER_IP }}:${{ secrets.PROJECT_DIR }}
     
     - name: login to registry
       run: echo ${{ secrets.PAT }} | docker login ${{ secrets.REGISTRY }} -u ${{ github.actor }} --password-stdin 
@@ -57,7 +57,11 @@ jobs:
         username: ${{ secrets.DP_SERVER_USER }}
         key: ${{ secrets.DP_SERVER_SSH_KEY }}
         script: |
-          echo ${{ secrets.DP_SERVER_IP }} > temp
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           docker stop $(docker ps -qa)
           docker rmi $(docker images -qa) -f
           cd ${{ secrets.PROJECT_DIR }}
