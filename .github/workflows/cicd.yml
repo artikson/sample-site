@@ -18,7 +18,8 @@ jobs:
 
     - name: build and push
       run: |
-        docker compose build
+        docker build . -t ghcr.io/artikson/sample-site-flask
+        docker build . -t ghcr.io/artikson/sample-site-flask
         docker compose push
 
   # cdep-steps:
