@@ -21,27 +21,29 @@ jobs:
         docker compose build
         docker compose push
 
-  # cdep-steps:
-  #   runs-on: ubuntu-latest
-  #   needs: cicdel-steps
-  #   steps:
+  cdep-steps:
+    runs-on: ubuntu-latest
+    needs: cicdel-steps
+    steps:
 
-  #   - name: deploy
-  #     uses: appleboy/ssh-action@master
-  #     with:
-  #       host: ${{ secrets.DP_SERVER_IP }}
-  #       port: ${{ secrets.DP_SERVER_SSH_PORT }}
-  #       username: ${{ secrets.DP_SERVER_USER }}
-  #       key: ${{ secrets.DP_SERVER_SSH_KEY }}
-  #       script: |  
-  #         POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-  #         POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
-  #         POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
-  #         POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-  #         POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-  #         docker stop $(docker ps -qa)
-  #         docker rmi $(docker images -qa) -f
-  #         cd ${{ secrets.PROJECT_DIR }}
-  #         git pull
-  #         docker compose pull
-  #         docker compose up -d
+    - name: deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.DP_SERVER_IP }}
+        port: ${{ secrets.DP_SERVER_SSH_PORT }}
+        username: ${{ secrets.DP_SERVER_USER }}
+        key: ${{ secrets.DP_SERVER_SSH_KEY }}
+        script: |  
+          POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+          cd ${{ secrets.PROJECT_DIR }}
+          git pull
+          kubectl apply -f .kube/
+#    ---- for docker compose configuration ----
+#         docker stop $(docker ps -qa)
+#         docker rmi $(docker images -qa) -f
+#         docker compose pull
+#         docker compose up -d
