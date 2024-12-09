@@ -10,9 +10,6 @@ from ..models.post import Post
 post = Blueprint('post', __name__)
 
 @post.route('/', methods=['POST', 'GET'])
-def favicon():
-    return send_from_directory(os.path.join(post.root_path, 'static/image'),
-                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 def all():
     form = TeacherForm()
     form.teacher.choices = [t.name for t in User.query.filter_by(status='teacher')]
@@ -24,6 +21,11 @@ def all():
     else:
         posts = Post.query.order_by(Post.date.desc()).limit(20).all()
     return render_template('post/all.html', posts=posts, user=User, form=form)
+
+@post.route('/favicon.ico', methods=['POST', 'GET'])
+def favicon():
+    return send_from_directory(os.path.join(post.root_path, 'static/image'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @post.route('/post/create', methods=['POST', 'GET'])
