@@ -43,7 +43,7 @@ services:
 
   nginx:
     build:
-      dockerfile: ./Dockerfile
+      dockerfile: ./nginx/Dockerfile
       # context: ./nginx
     container_name: nginx
     depends_on:
