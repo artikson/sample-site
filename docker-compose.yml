@@ -43,8 +43,8 @@ services:
 
   nginx:
     build:
-      dockerfile: ./nginx/Dockerfile
-      context: .
+      dockerfile: .Dockerfile
+      context: ./nginx
     container_name: nginx
     depends_on:
       - flask

@@ -1,4 +1,5 @@
-from flask import Blueprint, abort, redirect, render_template, request
+import os
+from flask import Blueprint, abort, redirect, render_template, request, send_from_directory
 from flask_login import current_user, login_required
 
 from ..models.user import User
@@ -9,6 +10,9 @@ from ..models.post import Post
 post = Blueprint('post', __name__)
 
 @post.route('/', methods=['POST', 'GET'])
+def favicon():
+    return send_from_directory(os.path.join(post.root_path, 'static/image'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 def all():
     form = TeacherForm()
     form.teacher.choices = [t.name for t in User.query.filter_by(status='teacher')]
