@@ -3,3 +3,7 @@
 env/
 __pycache__/
 migrations/
+Dockerfile
+docker-compose.yml
+README.md
+nginx/
