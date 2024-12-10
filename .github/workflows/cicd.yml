@@ -41,11 +41,11 @@ jobs:
           POSTGRES_DB=${{ secrets.POSTGRES_DB }}
           cd ${{ secrets.PROJECT_DIR }}
           git pull
-          kubectl set image deployment/flask flask=ghcr.io/artikson/sample-site-flask:latest
-          kubectl set image deployment/nginx nginx=ghcr.io/artikson/sample-site-nginx:latest
-          kubectl set image deployment/flask flask=ghcr.io/artikson/sample-site-flask
-          kubectl set image deployment/nginx nginx=ghcr.io/artikson/sample-site-nginx
-          kubectl apply -f .kube/
+          kubectl set image deployment/flask flask=ghcr.io/artikson/sample-site-flask:latest -n samplesite
+          kubectl set image deployment/nginx nginx=ghcr.io/artikson/sample-site-nginx:latest -n samplesite
+          kubectl set image deployment/flask flask=ghcr.io/artikson/sample-site-flask -n samplesite
+          kubectl set image deployment/nginx nginx=ghcr.io/artikson/sample-site-nginx -n samplesite
+          kubectl apply -f .kube/ 
 #    ---- for docker compose configuration ----
 #         docker stop $(docker ps -qa)
 #         docker rmi $(docker images -qa) -f
