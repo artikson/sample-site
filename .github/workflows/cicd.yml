@@ -42,9 +42,13 @@ jobs:
           cd ${{ secrets.PROJECT_DIR }}
           git pull
           kubectl set image deployment/flask flask=ghcr.io/artikson/sample-site-flask:latest -n samplesite
+          sleep 30
           kubectl set image deployment/nginx nginx=ghcr.io/artikson/sample-site-nginx:latest -n samplesite
+          sleep 30
           kubectl set image deployment/flask flask=ghcr.io/artikson/sample-site-flask -n samplesite
+          sleep 30
           kubectl set image deployment/nginx nginx=ghcr.io/artikson/sample-site-nginx -n samplesite
+          sleep 30
           kubectl apply -f .kube/ 
 #    ---- for docker compose configuration ----
 #         docker stop $(docker ps -qa)
